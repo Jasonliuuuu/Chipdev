@@ -19,6 +19,8 @@ module model (
             cnt2 <= cnt2 + 1;
             cnt4 <= cnt4 + 1;
             cnt6 <= (cnt6 + 1) % 6;
+            //cnt6 <= (cnt6 == 5)? 0: cnt6 + 1;
+            //This can avoid using divide operator, which can be expensive in hardware (the area is huge)
         end
     end
 
