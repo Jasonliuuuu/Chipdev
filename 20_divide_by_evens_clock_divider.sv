@@ -29,3 +29,14 @@ module model (
     assign div6 = (cnt6 == 1) || (cnt6 == 2) || (cnt6 == 3);
 
 endmodule
+
+/*
+Always @(posedge ck)begin
+   If(!rst_n)begin
+         Clk_div2 <= 0
+   end
+   else begin 
+          Clk_div2 <= !Clk_div2
+   end
+end
+*/
