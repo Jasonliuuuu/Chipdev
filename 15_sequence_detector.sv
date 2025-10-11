@@ -8,6 +8,15 @@ module model (
   parameter S0 = 0, S1 = 1, S2 = 2, S3 = 3, S4 = 4; 
   logic [2:0] state, next_state; 
 
+
+  always @(posedge clk) begin
+    if (!resetn) begin
+      state <= S0; 
+    end else begin
+      state <= next_state; 
+    end
+  end
+
   always_comb begin
     case (state)
       S0: next_state = din? S1: S0; 
@@ -18,17 +27,7 @@ module model (
     endcase
   end
 
-  always @(posedge clk) begin
-    if (!resetn) begin
-      state <= S0; 
-    end else begin
-      state <= next_state; 
-    end
-  end
-
-
   assign dout = (state == S4); 
-
 
 endmodule
 
