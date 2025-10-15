@@ -18,7 +18,6 @@ module model #(parameter
       pre_val <= cur_val; 
     end
   end
-
     
   assign out = cur_val; 
 
