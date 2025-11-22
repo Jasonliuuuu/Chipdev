@@ -8,15 +8,12 @@ module model (
     output logic [7:0] dout,
     output logic error
 );
-
     logic [7:0] mem [7:0]; 
-    logic [7:0] dout_temp;
-    logic error_temp;  
-
-
+    logic [7:0] dout_reg; 
+    logic error_reg; 
 
     always @(posedge clk) begin
-        if(!resetn) begin
+        if (!resetn) begin
             mem[0] <= 0; 
             mem[1] <= 0; 
             mem[2] <= 0; 
@@ -25,30 +22,30 @@ module model (
             mem[5] <= 0; 
             mem[6] <= 0; 
             mem[7] <= 0; 
-            error_temp <= 0;
-            dout_temp <= 0; 
+            dout_reg <= 0; 
+            error_reg <= 0; 
         end
-        else if (rd ==1 && wr == 1 ) begin
-            error_temp <= 1; 
-            dout_temp <= 0; 
+        else if (rd && wr) begin
+            error_reg <= 1; 
+            dout_reg <= 0;
         end
-        else if (rd ==0 && wr ==0 ) begin
-            error_temp <= 0; 
-            dout_temp <= 0; 
-        end 
         else if (wr) begin
+            error_reg <= 0; 
             mem[addr] <= din; 
-            error_temp <=0; 
-            dout_temp <=0; 
+            dout_reg <= 0; 
         end
         else if (rd) begin
-            dout_temp <= mem[addr]; 
-            error_temp <= 0; 
+            error_reg <= 0; 
+            dout_reg <= mem[addr]; 
+        end
+        else begin
+            error_reg <= 0; 
+            dout_reg <= 0; 
         end
     end
 
-    assign dout = dout_temp; 
-    assign error = error_temp; 
+    assign dout = dout_reg; 
+    assign error = error_reg; 
 
 
 endmodule
